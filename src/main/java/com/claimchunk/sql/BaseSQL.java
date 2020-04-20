@@ -2,6 +2,7 @@ package com.claimchunk.sql;
 
 import com.claimchunk.Loader;
 
+import java.nio.charset.Charset;
 import java.sql.*;
 
 public class BaseSQL {
@@ -12,6 +13,8 @@ public class BaseSQL {
     private static String host;
     private static String database;
     private static int port;
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset ISO = Charset.forName("ISO-8859-1");
 
     static {
         username = Loader.config.getString("database.username");
@@ -70,9 +73,9 @@ public class BaseSQL {
         if (con != null && !con.isClosed()) {
             return;
         }
-        String url = "jdbc:mysql://"+host+"/"+database+"?useSSL=false";
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection(url, username, password);
+        String url = "jdbc:mariadb://"+host+":3306/"+database+"?sslMode=DISABLED&useSSL=false&allowPublicKeyRetrieval=true";
+        Class.forName("org.mariadb.jdbc.Driver");
+        con = DriverManager.getConnection(url, new String(username.getBytes(ISO),UTF_8), new String(password.getBytes(ISO),UTF_8));
     }
 
 }

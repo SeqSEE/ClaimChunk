@@ -5,9 +5,12 @@ import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.plugin.Plugin;
+
+import java.math.BigDecimal;
+
 import com.claimchunk.Database;
 import com.claimchunk.Loader;
-import me.onebone.economyapi.EconomyAPI;
+import xyz.cryptechcraft.cryptoconomyapi.CryptoconomyAPI;
 
 public class ChunkCommand extends PluginCommand {
 
@@ -128,15 +131,15 @@ public class ChunkCommand extends PluginCommand {
                             String ownerName = Database.getClaimOwner(p);
                             sender.sendMessage("§6§lClaimChunk>§r§c This area is already claimed by§f "+ownerName);
                         } else {
-                            if(Loader.config.getBoolean("economyapi.isActive"))
+                            if(Loader.config.getBoolean("cryptoconomyapi.isActive"))
                             {
-                                if(EconomyAPI.getInstance().myMoney(p) >= Loader.config.getDouble("economyapi.price"))
+                                if(CryptoconomyAPI.getInstance().myMoney(p).compareTo(new BigDecimal(Loader.config.getString("cryptoconomyapi.price")).setScale(8, BigDecimal.ROUND_HALF_DOWN)) >= 0)
                                 {
-                                    EconomyAPI.getInstance().reduceMoney(p, Loader.config.getDouble("economyapi.price"));
+                                    CryptoconomyAPI.getInstance().reduceMoney(p, new BigDecimal(Loader.config.getString("cryptoconomyapi.price")).setScale(8, BigDecimal.ROUND_HALF_DOWN).toPlainString());
                                     Database.makeClaim(p);
                                     sender.sendMessage("§6§lClaimChunk>§r§a You have claimed this area.");
                                 } else {
-                                    sender.sendMessage("§6§lClaimChunk>§r§c You must have "+Loader.config.getDouble("economyapi.price") + "$ to claim this area.");
+                                    sender.sendMessage("§6§lClaimChunk>§r§c You must have "+Loader.config.getDouble("cryptoconomyapi.price") + " Credits to claim this area.");
                                 }
                             } else {
                                 Database.makeClaim(p);

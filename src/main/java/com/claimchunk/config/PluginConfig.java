@@ -13,8 +13,8 @@ public class PluginConfig {
             Loader.config.set("database.host", "none");
             Loader.config.set("database.password", "none");
             Loader.config.set("database.username", "none");
-            Loader.config.set("economyapi.isActive", false);
-            Loader.config.set("economyapi.price", 150);
+            Loader.config.set("cryptoconomyapi.isActive", false);
+            Loader.config.set("cryptoconomyapi.price", "1.00000000");
             Loader.config.set("claimExpiration.isActive", false);
             Loader.config.set("claimExpiration.timeInSecond", -1);
             Loader.config.save(true);
