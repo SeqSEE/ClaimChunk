@@ -139,7 +139,7 @@ public class ChunkCommand extends PluginCommand {
                                     Database.makeClaim(p);
                                     sender.sendMessage("§6§lClaimChunk>§r§a You have claimed this area.");
                                 } else {
-                                    sender.sendMessage("§6§lClaimChunk>§r§c You must have "+Loader.config.getDouble("cryptoconomyapi.price") + " Credits to claim this area.");
+                                    sender.sendMessage("§6§lClaimChunk>§r§c You must have "+Loader.config.getString("cryptoconomyapi.price") + " Credits to claim this area.");
                                 }
                             } else {
                                 Database.makeClaim(p);
