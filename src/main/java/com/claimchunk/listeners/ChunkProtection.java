@@ -2,6 +2,7 @@ package com.claimchunk.listeners;
 
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
@@ -13,7 +14,7 @@ import com.claimchunk.Loader;
 
 public class ChunkProtection implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onBlockPlace(BlockPlaceEvent e) throws Exception {
 		if(!Loader.config.getBoolean("claimProtection.build")) {
 			return;
@@ -28,7 +29,7 @@ public class ChunkProtection implements Listener {
         }
     }
 
-    @EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onBlockBreak(BlockBreakEvent e) throws Exception {
     	if(!Loader.config.getBoolean("claimProtection.build")) {
 			return;
@@ -42,7 +43,7 @@ public class ChunkProtection implements Listener {
             }
         }
     }
-    @EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent e) throws Exception {
     	if(!Loader.config.getBoolean("claimProtection.interact")) {
 			return;
@@ -57,7 +58,7 @@ public class ChunkProtection implements Listener {
         }
     }
     
-    @EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onEntityDamage(EntityDamageEvent e) throws Exception {
     	if(!Loader.config.getBoolean("claimProtection.entityDamage")) {
 			return;
