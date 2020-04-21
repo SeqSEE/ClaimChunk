@@ -7,6 +7,7 @@ import cn.nukkit.command.PluginCommand;
 import cn.nukkit.plugin.Plugin;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import com.claimchunk.Database;
 import com.claimchunk.Loader;
@@ -135,9 +136,16 @@ public class ChunkCommand extends PluginCommand {
                             {
                                 if(CryptoconomyAPI.getInstance().myMoney(p).compareTo(new BigDecimal(Loader.config.getString("cryptoconomyapi.price")).setScale(8, BigDecimal.ROUND_HALF_DOWN)) >= 0)
                                 {
-                                    CryptoconomyAPI.getInstance().reduceMoney(p, new BigDecimal(Loader.config.getString("cryptoconomyapi.price")).setScale(8, BigDecimal.ROUND_HALF_DOWN).toPlainString());
-                                    Database.makeClaim(p);
-                                    sender.sendMessage("§6§lClaimChunk>§r§a You have claimed this area.");
+                                	BigDecimal d =new BigDecimal(Loader.config.getString("cryptoconomyapi.price")).setScale(8, BigDecimal.ROUND_HALF_DOWN);
+                                    if(CryptoconomyAPI.getInstance().reduceMoney(p, d.toPlainString()) == CryptoconomyAPI.RET_SUCCESS) {
+                                    	CryptoconomyAPI.getInstance().addMoney(UUID.fromString("0881aa1a-a02e-4356-a0f4-2dc232dae210"), d.toPlainString());
+                                    	Database.makeClaim(p);
+                                        sender.sendMessage("§6§lClaimChunk>§r§a You have claimed this area.");
+                                    } else {
+                                    	sender.sendMessage("§6§lClaimChunk>§r§c Something went wrong.");
+                                    }
+                                    
+                                    
                                 } else {
                                     sender.sendMessage("§6§lClaimChunk>§r§c You must have "+Loader.config.getString("cryptoconomyapi.price") + " Credits to claim this area.");
                                 }

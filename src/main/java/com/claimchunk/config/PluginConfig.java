@@ -1,6 +1,5 @@
 package com.claimchunk.config;
 
-import cn.nukkit.utils.Config;
 import com.claimchunk.Loader;
 
 public class PluginConfig {
@@ -17,6 +16,9 @@ public class PluginConfig {
             Loader.config.set("cryptoconomyapi.price", "1.00000000");
             Loader.config.set("claimExpiration.isActive", false);
             Loader.config.set("claimExpiration.timeInSecond", -1);
+            Loader.config.set("claimProtection.entityDamage", true);
+            Loader.config.set("claimProtection.interact", true);
+            Loader.config.set("claimProtection.build", true);
             Loader.config.save(true);
         }
     }

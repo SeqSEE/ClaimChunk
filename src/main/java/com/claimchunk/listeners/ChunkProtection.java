@@ -9,11 +9,15 @@ import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.level.particle.FlameParticle;
 import com.claimchunk.Database;
+import com.claimchunk.Loader;
 
 public class ChunkProtection implements Listener {
 
-    @EventHandler
+	@EventHandler
     public void onBlockPlace(BlockPlaceEvent e) throws Exception {
+		if(!Loader.config.getBoolean("claimProtection.build")) {
+			return;
+		}
         Player p = e.getPlayer();
         if (Database.getClaimOwner(e.getBlock()) != null && !(p.getName().equalsIgnoreCase(Database.getClaimOwner(e.getBlock())))) {
             if(Database.isGranted(Database.getClaimId(e.getBlock()), e.getPlayer().getUniqueId())) {
@@ -26,6 +30,9 @@ public class ChunkProtection implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) throws Exception {
+    	if(!Loader.config.getBoolean("claimProtection.build")) {
+			return;
+		}
         Player p = e.getPlayer();
         if (Database.getClaimOwner(e.getBlock()) != null && !(p.getName().equalsIgnoreCase(Database.getClaimOwner(e.getBlock())))) {
             if(Database.isGranted(Database.getClaimId(e.getBlock()), e.getPlayer().getUniqueId())) {
@@ -37,6 +44,9 @@ public class ChunkProtection implements Listener {
     }
     @EventHandler
     public void onInteract(PlayerInteractEvent e) throws Exception {
+    	if(!Loader.config.getBoolean("claimProtection.interact")) {
+			return;
+		}
         Player p = e.getPlayer();
         if (Database.getClaimOwner(e.getBlock()) != null && !(p.getName().equalsIgnoreCase(Database.getClaimOwner(e.getBlock())))) {
             if(Database.isGranted(Database.getClaimId(e.getBlock()), e.getPlayer().getUniqueId())) {
@@ -46,9 +56,12 @@ public class ChunkProtection implements Listener {
             }
         }
     }
-
+    
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) throws Exception {
+    	if(!Loader.config.getBoolean("claimProtection.entityDamage")) {
+			return;
+		}
         if(e.getEntity() instanceof Player) {
             Player p = (Player)e.getEntity();
             if (Database.getClaimOwner(p) != null) {
